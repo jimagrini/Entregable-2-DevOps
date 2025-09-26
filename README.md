@@ -53,7 +53,7 @@ Funcionalidades principales:
     - POST /api/orders/{orderId}/cancel
     - GET /api/orders
 
-🟢 Monitoreo y alertas
+Monitoreo y alertas
 - La aplicación expone métricas en /actuator/prometheus.
 - Se trackean todas las órdenes con etiquetas (producto, estado).
 - Prometheus recolecta estas métricas automáticamente.
@@ -111,14 +111,13 @@ Credenciales por defecto:
 - pass: prom-operator
 
 - Dashboards:
-Opción 1: Importación manual
-- En Grafana, ir a Dashboards → New → Import.
-- Subir el archivo grafana/cafe-api-dashboard.json
-- Seleccionar la fuente de datos Prometheus.
+- Opción 1: Importación manual
+  - En Grafana, ir a Dashboards → New → Import.
+  - Subir el archivo grafana/cafe-api-dashboard.json
+  - Seleccionar la fuente de datos Prometheus.
 
-Opción 2: Importación automática con ConfigMap
-
-En el proyecto incluimos k8s/grafana-dashboard-configmap.yaml
+- Opción 2: Importación automática con ConfigMap
+  - En el proyecto incluimos k8s/grafana-dashboard-configmap.yaml
 , que crea un ConfigMap con el dashboard y Grafana lo carga automáticamente gracias al label grafana_dashboard: "1".
 
 Para aplicarlo:
