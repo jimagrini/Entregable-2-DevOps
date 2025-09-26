@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: cafe-api-rules
+  namespace: monitoring
+spec:
+  groups:
+    - name: order-alerts
+      rules:
+        - alert: HighOrderRate
+          expr: sum(rate(orders_total[5m])) by (product) > 10
+          for: 1m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Alerta: alto número de órdenes para {{ $labels.product }}"
+            description: "Se detectaron más de 10 órdenes en 5 minutos para el producto {{ $labels.product }}"
