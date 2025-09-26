@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cafe-api
+  namespace: cafeteria
+spec:
+  selector:
+    app: cafe-api
+  ports:
+    - name: http
+      port: 80          # el puerto dentro del cluster
+      targetPort: 8080  # el puerto expuesto por tu app dentro del pod
+      nodePort: 30080   # el puerto que abre en Minikube (debe estar en el rango 30000-32767)
+  type: NodePort
+

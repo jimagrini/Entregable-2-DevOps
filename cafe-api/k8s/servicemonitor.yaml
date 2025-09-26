@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: cafe-api
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: cafe-api
+  namespaceSelector:
+    matchNames:
+      - cafeteria
+  endpoints:
+    - port: http
+      path: /actuator/prometheus
+      interval: 15s

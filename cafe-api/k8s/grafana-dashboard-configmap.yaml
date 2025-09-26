@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cafe-api-dashboard
+  namespace: monitoring
+  labels:
+    grafana_dashboard: "1"
+data:
+  cafe-api-dashboard.json: |
+    {
+      "id": null,
+      "title": "Cafetería API Dashboard",
+      "tags": ["cafe-api", "orders", "products"],
+      "timezone": "browser",
+      "schemaVersion": 30,
+      "version": 1,
+      "refresh": "10s",
+      "panels": [
+        {
+          "type": "graph",
+          "title": "Órdenes por producto (últimos 5 min)",
+          "targets": [
+            {
+              "expr": "sum(rate(orders_total[5m])) by (product)",
+              "legendFormat": "Producto {{product}}"
+            }
+          ],
+          "datasource": "Prometheus",
+          "gridPos": { "x": 0, "y": 0, "w": 12, "h": 8 }
+        },
+        {
+          "type": "graph",
+          "title": "Órdenes por estado",
+          "targets": [
+            {
+              "expr": "sum(rate(orders_total[5m])) by (status)",
+              "legendFormat": "Estado {{status}}"
+            }
+          ],
+          "datasource": "Prometheus",
+          "gridPos": { "x": 12, "y": 0, "w": 12, "h": 8 }
+        },
+        {
+          "type": "stat",
+          "title": "Total de órdenes",
+          "targets": [
+            { "expr": "sum(orders_total)" }
+          ],
+          "datasource": "Prometheus",
+          "gridPos": { "x": 0, "y": 8, "w": 6, "h": 6 }
+        }
+      ]
+    }

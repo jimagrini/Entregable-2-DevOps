@@ -1,0 +1,85 @@
+{
+  "id": null,
+  "title": "Cafetería API Dashboard",
+  "tags": ["cafe-api", "orders", "products"],
+  "timezone": "browser",
+  "schemaVersion": 30,
+  "version": 1,
+  "refresh": "10s",
+  "panels": [
+    {
+      "type": "graph",
+      "title": "Órdenes por producto (últimos 5 min)",
+      "targets": [
+        {
+          "expr": "sum(rate(orders_total[5m])) by (product)",
+          "legendFormat": "Producto {{product}}",
+          "interval": ""
+        }
+      ],
+      "datasource": "Prometheus",
+      "gridPos": { "x": 0, "y": 0, "w": 12, "h": 8 }
+    },
+    {
+      "type": "graph",
+      "title": "Órdenes por estado",
+      "targets": [
+        {
+          "expr": "sum(rate(orders_total[5m])) by (status)",
+          "legendFormat": "Estado {{status}}",
+          "interval": ""
+        }
+      ],
+      "datasource": "Prometheus",
+      "gridPos": { "x": 12, "y": 0, "w": 12, "h": 8 }
+    },
+    {
+      "type": "stat",
+      "title": "Total de órdenes",
+      "targets": [
+        {
+          "expr": "sum(orders_total)",
+          "legendFormat": "Total"
+        }
+      ],
+      "datasource": "Prometheus",
+      "gridPos": { "x": 0, "y": 8, "w": 6, "h": 6 }
+    },
+    {
+      "type": "stat",
+      "title": "Órdenes creadas (totales)",
+      "targets": [
+        {
+          "expr": "sum(orders_total{status=\"created\"})",
+          "legendFormat": "Creadas"
+        }
+      ],
+      "datasource": "Prometheus",
+      "gridPos": { "x": 6, "y": 8, "w": 6, "h": 6 }
+    },
+    {
+      "type": "stat",
+      "title": "Órdenes pagadas (totales)",
+      "targets": [
+        {
+          "expr": "sum(orders_total{status=\"paid\"})",
+          "legendFormat": "Pagadas"
+        }
+      ],
+      "datasource": "Prometheus",
+      "gridPos": { "x": 12, "y": 8, "w": 6, "h": 6 }
+    },
+    {
+      "type": "stat",
+      "title": "Órdenes canceladas (totales)",
+      "targets": [
+        {
+          "expr": "sum(orders_total{status=\"cancelled\"})",
+          "legendFormat": "Canceladas"
+        }
+      ],
+      "datasource": "Prometheus",
+      "gridPos": { "x": 18, "y": 8, "w": 6, "h": 6 }
+    }
+  ]
+}
