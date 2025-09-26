@@ -1,6 +1,6 @@
-##Actividad - Entregable 2 - Dev Ops
-###Grupo: Juan Magrini, Claudio Cabrera
-###Profesor: Rodrigo Lopez
+## Actividad - Entregable 2 - Dev Ops
+### Grupo: Juan Magrini, Claudio Cabrera
+### Profesor: Rodrigo Lopez
 
 Este proyecto implementa un REST API en Java Spring Boot para simular la toma de pedidos en una cafetería.
 La aplicación está contenerizada con Docker y desplegada en un cluster de Kubernetes (Minikube).
