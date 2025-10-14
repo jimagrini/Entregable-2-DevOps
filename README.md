@@ -44,7 +44,7 @@ Funcionalidades principales:
 
 - Gestión de órdenes
   - Crear órdenes de productos.
-  - Marcar una orden como pagada.
+  - Actualizar estado del pedido (NEW, IN_PROGRESS, READY, DELIVERED, CANCELLED)
   - Cancelar una orden.
   - Listar todas las órdenes.
   - Endpoints:
@@ -55,6 +55,10 @@ Funcionalidades principales:
 
 Monitoreo y alertas
 - La aplicación expone métricas en /actuator/prometheus.
+  - Métricas personalizadas definidas en OrderService:
+  - coffee_orders_created_total: Número total de pedidos creados.
+  - coffee_orders_delivered_total: Número total de pedidos entregados.
+  - Además, se exponen métricas de sistema y HTTP estándar como: jvm_memory_used_bytes, http_server_requests_seconds_count, process_cpu_usage  
 - Se trackean todas las órdenes con etiquetas (producto, estado).
 - Prometheus recolecta estas métricas automáticamente.
 - Grafana permite visualizarlas en dashboards.
@@ -99,7 +103,7 @@ Visualizar Prometheus:
 kubectl port-forward -n monitoring svc/kps-kube-prometheus-stack-prometheus 9090:9090
 ```
 Abrir en navegador en http://localhost:9090
-Consultar métricas: orders_total
+- Consultar métricas: coffee_orders_created_total, coffee_orders_delivered_total
 
 Visualizar grafana:
 ```bash
@@ -118,8 +122,12 @@ Credenciales por defecto:
 
 - Opción 2: Importación automática con ConfigMap
   - En el proyecto incluimos k8s/grafana-dashboard-configmap.yaml
-, que crea un ConfigMap con el dashboard y Grafana lo carga automáticamente gracias al label grafana_dashboard: "1".
-
+  - Grafana cargará automáticamente el dashboard “Cafetería API Dashboard”, que muestra:
+    - Total de pedidos creados y entregados. 
+    - Órdenes por producto.
+    - Órdenes por estado. 
+    - Uso de CPU y memoria de la aplicación.
+    
 Para aplicarlo:
 ```bash
 kubectl apply -f k8s/grafana-dashboard-configmap.yaml

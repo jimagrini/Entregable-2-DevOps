@@ -16,23 +16,34 @@ public class OrderController {
         this.service = service;
     }
 
-    @PostMapping("/{productId}")
-    public Order create(@PathVariable Long productId) {
-        return service.create(productId);
+    // 🔹 Crear una nueva orden (cliente, producto y cantidad)
+    @PostMapping
+    public Order create(@RequestBody Order order) {
+        return service.createOrder(order);
     }
 
-    @PostMapping("/{orderId}/pay")
-    public Order pay(@PathVariable Long orderId) {
-        return service.pay(orderId);
-    }
-
-    @PostMapping("/{orderId}/cancel")
-    public Order cancel(@PathVariable Long orderId) {
-        return service.cancel(orderId);
-    }
-
+    // 🔹 Obtener todas las órdenes
     @GetMapping
     public List<Order> all() {
-        return service.all();
+        return service.getAllOrders();
+    }
+
+    // 🔹 Obtener una orden específica por ID
+    @GetMapping("/{id}")
+    public Order getById(@PathVariable Long id) {
+        return service.getOrderById(id);
+    }
+
+    // 🔹 Actualizar el estado de una orden (por ejemplo: READY, DELIVERED, CANCELLED)
+    @PatchMapping("/{id}/status/{status}")
+    public Order updateStatus(@PathVariable Long id, @PathVariable String status) {
+        return service.updateOrderStatus(id, status);
+    }
+
+    // 🔹 Eliminar una orden
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        service.deleteOrder(id);
     }
 }
+
